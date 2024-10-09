@@ -42,11 +42,7 @@ console.log(count)
 // }
 
 
-
-
-
 // for : calculate total digit in number. 12345 => 5
-
 // let number = 12345
 // let count = 0
 // // for( ; number != 0 ; )
@@ -59,7 +55,6 @@ console.log(count)
 
 
 // while
-
 // let number = 12345
 // let reverse = 0
 // let last_digit = number % 10
