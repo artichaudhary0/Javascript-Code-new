@@ -74,9 +74,3 @@ Syntax :
 // }
 
 // add(10,20)
-
-window.document.console.log("Arti")
-
-obj = {
-    name : "Arti"
-}
