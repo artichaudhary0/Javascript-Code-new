@@ -1,4 +1,4 @@
-let marks = prompt("Enter your marks : ")
+let marks 
 
 var grade // global 
 
@@ -52,4 +52,18 @@ function eligibility(){
 }
 
 console.log(eligibility())
+
+// normal fun
+function add(){
+
+}
+
+
+// arrow fun
+
+let fun = () => {
+    console.log("arrow function")
+}
+
+
 
