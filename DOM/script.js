@@ -24,14 +24,15 @@ for(let i = 0 ; i < thByQuerySelectorAllClass.length ; i++)
     thByQuerySelectorAllClass[i].innerHTML = `<table>
       <thead>
         <tr>
-          <th class="one" hello = "hello world">Name</th>
+          <th class="one" hello = "hello world" style = "color: white;">Name</th>
           <th class="one">Details</th>
           <th class="one">Date</th>
           <th class="one">Actions</th>
         </tr>
       </thead>
-      <tbody id="recordList" class = "one" >Data</tbody>
+
     </table>`
+
 }
 
 
