@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+  </head>
+  <body>
+    <script>
+      function calculator(num1, operator, num2) {
+        let result;
+        switch (operator) {
+          case "+":
+            result = num1 + num2;
+            break;
+          case "-":
+            result = num1 - num2;
+            break;
+          case "*":
+            result = num1 * num2;
+            break;
+          case "/":
+            if (num2 === 0) {
+              result = "Division by zero error";
+            } else {
+              result = num1 / num2;
+            }
+            break;
+          case "%":
+            if (num2 === 0) {
+              result = "Remainer by zero error";
+            } else {
+              result = num1 % num2;
+            }
+            break;
+          default:
+            result = "Invalid operator";
+        }
+        return result;
+      }
+
+      const num1 = parseFloat(prompt("Enter the first number : "));
+      const operator = prompt("Enter the operator (-,+,*,/,&) : ");
+      const num2 = parseFloat(prompt("Enter the second number : "));
+
+      let output;
+      if (isNaN(num1) || isNaN(num2)) {
+        output = "Please enter a valid number!!";
+      } else {
+        output = "Result : " + calculator(num1, operator, num2);
+      }
+
+      document.body.innerHTML = `<h1> ${output}</h1>`;
+    </script>
+  </body>
+</html>
