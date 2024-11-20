@@ -11,6 +11,7 @@
         margin: 0;
         padding: 0;
       }
+
       .app {
         width: 300px;
         margin: 50px auto;
@@ -30,7 +31,7 @@
         padding: 10px;
         margin-right: 10px;
         border: 1px solid #ccc;
-        border-radius: 8px;
+        border-radius: 4px;
       }
 
       button {
@@ -38,9 +39,8 @@
         background-color: #28a745;
         color: white;
         border: none;
-        border-radius: 8px;
+        border-radius: 4px;
         cursor: pointer;
-        margin-top: 20px;
       }
 
       button:hover {
@@ -52,8 +52,29 @@
         text-align: left;
       }
 
-      
+      .task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
 
+      .task-item button {
+        background-color: #dc3545;
+      }
+
+      .task-item button:hover {
+        background-color: #c82333;
+      }
+
+      .task-item.completed {
+        text-decoration: line-through;
+        background-color: #d4edda;
+      }
     </style>
   </head>
   <body>
@@ -64,7 +85,7 @@
         <button id="addTaskBtn">Add Task</button>
       </div>
       <div id="taskList" class="task-list">
-        <!-- Task list will be shown here-->
+        <!-- Tasks will be dynamically added here -->
       </div>
     </div>
 

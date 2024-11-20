@@ -3,25 +3,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const addTaskBtn = document.getElementById("addTaskBtn");
   const taskList = document.getElementById("taskList");
 
-  // Load task from local storage
+  // Load tasks from local storage
   const loadTask = () => {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    taskList.innerHTML = ""; // clear task list
+    const tasks = JSON.parse(localStorage.getItem("task")) || [];
+    taskList.innerHTML = ""; // Clear task list
 
     tasks.forEach((task) => {
-      creatTaskElement(task);
+      createTaskElement(task);
     });
   };
 
-  // save data to local storage
+  // Save tasks to local storage
   const saveTask = (tasks) => {
-    let data = localStorage.setItem("tasks", JSON.stringify(tasks));
-    console.log(data);
-    return "hello";
+    localStorage.setItem("task", JSON.stringify(tasks));
   };
 
-  // create task element
-  const creatTaskElement = (task) => {
+  // Create task element
+  const createTaskElement = (task) => {
     const taskItem = document.createElement("div");
     taskItem.classList.add("task-item");
 
@@ -32,78 +30,96 @@ document.addEventListener("DOMContentLoaded", () => {
     taskItem.innerHTML = `
       <span class="task-text">${task.text}</span>
       <div>
-        <button class="editButton">Edit Button</button>
-        <button class="deleteButton">Delete Button</button>
-        <input type="checkbox" class = "completedCheckedBox" ${
+        <button class="editButton">Edit</button>
+        <button class="deleteButton">Delete</button>
+        <input type="checkbox" class="completedCheckbox" ${
           task.completed ? "checked" : ""
-        }></div>
-      `;
+        }>
+      </div>
+    `;
 
-    // EDIT
+    // Edit button functionality
     taskItem.querySelector(".editButton").addEventListener("click", () => {
-      editTask(task, taskItem);
-      console.log("hbfihdfb");
+      editTask(task);
     });
 
-    // delete
+    // Delete button functionality
     taskItem.querySelector(".deleteButton").addEventListener("click", () => {
-      deleteTask(task, taskItem);
+      deleteTask(task);
     });
 
-    // mark task as completed
-
+    // Toggle completion checkbox functionality
     taskItem
-      .querySelector(".completedCheckedBox")
-      .addEventListener("click", () => {
-        toggleTask(task, taskItem);
+      .querySelector(".completedCheckbox")
+      .addEventListener("change", () => {
+        toggleTask(task);
       });
 
     taskList.appendChild(taskItem);
   };
 
+  // Add new task
   addTaskBtn.addEventListener("click", () => {
     if (taskInput.value.trim() === "") {
-      alert("Please enter task");
+      alert("Please enter a task.");
       return;
     }
 
-    // new task
     const newTask = {
       text: taskInput.value.trim(),
       completed: false,
     };
 
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const tasks = JSON.parse(localStorage.getItem("task")) || [];
     tasks.push(newTask);
     saveTask(tasks);
-    creatTaskElement(newTask);
+    createTaskElement(newTask);
 
-    taskInput.value = ""; // clear input
+    taskInput.value = ""; // Clear input field
   });
 
-  const editTask = (task, taskElement) => {
-    const newTask = prompt("Edit your task : ", task.text);
-    if (newTask !== null) {
-      task.text = newTask;
-      taskElement.querySelector(".task-text").textContent = newTask;
+  // Edit task
+  const editTask = (task) => {
+    const tasks = JSON.parse(localStorage.getItem("task")) || [];
+    const index = tasks.findIndex(
+      (t) => t.text === task.text && t.completed === task.completed
+    );
 
-      let data = saveTask(JSON.parse(localStorage.getItem("tasks")));
-      console.log(data);
+    if (index !== -1) {
+      const newTaskText = prompt("Edit your task:", task.text);
+      if (newTaskText !== null && newTaskText.trim() !== "") {
+        tasks[index].text = newTaskText;
+        saveTask(tasks);
+        loadTask(); // Reload the tasks to reflect the changes
+      }
     }
   };
 
-  const deleteTask = (task, taskElement) => {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const updateTask = tasks.filter((taskValue) => taskValue !== task);
-    saveTask(updateTask);
-    taskElement.remove();
+  // Delete task
+  const deleteTask = (task) => {
+    const tasks = JSON.parse(localStorage.getItem("task")) || [];
+    const updatedTasks = tasks.filter(
+      (t) => t.text !== task.text || t.completed !== task.completed
+    );
+
+    saveTask(updatedTasks);
+    loadTask(); // Reload the tasks to reflect the changes
   };
 
-  const toggleTask = (task, taskElement) => {
-    task.completed = !task.completed;
-    taskElement.classList.toggle("completed");
-    saveTask(JSON.parse(localStorage.getItem("tasks")));
+  // Toggle task completion
+  const toggleTask = (task) => {
+    const tasks = JSON.parse(localStorage.getItem("task")) || [];
+    const index = tasks.findIndex(
+      (t) => t.text === task.text && t.completed === task.completed
+    );
+
+    if (index !== -1) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTask(tasks);
+      loadTask(); // Reload the tasks to reflect the changes
+    }
   };
 
+  // Initial load of tasks
   loadTask();
 });
