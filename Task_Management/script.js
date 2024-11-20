@@ -1,63 +1,109 @@
-const taskInput = document.getElementById("taskInput");
-
-const addTaskBtn = document.getElementById("addTaskBtn");
-
-const taskList = document.getElementById("taskList");
-
 document.addEventListener("DOMContentLoaded", () => {
-  loadTask();
-});
+  const taskInput = document.getElementById("taskInput");
+  const addTaskBtn = document.getElementById("addTaskBtn");
+  const taskList = document.getElementById("taskList");
 
-const loadTask = () => {
-  const tasks = JSON.parse(localStorage.getItem("task"));
-  taskList.innerHTML = ""; // clear task list
+  // Load task from local storage
+  const loadTask = () => {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    taskList.innerHTML = ""; // clear task list
 
-  tasks.forEach((task) => {
-    creatTaskElement(task);
-  });
-};
-// create task list item
-const creatTaskElement = (task) => {
-  const taskItem = document.createElement("div");
-  taskItem.classList.add("task-item");
-
-  if (task.completed) {
-    taskItem.classList.add("completed");
-  } else {
-    taskItem.innerHTML = `
-    <span class="task-text">${task.dataTask}</span>
-    <div>
-      <button class="editButton">Edit Button</button>
-      <button class="deleteButton">Delete Button</button>
-      <input type="checkbox" class = "CompletedCheckedBox" ${
-        task.completed ? "checked" : ""
-      }></div>
-    `;
-  }
-  taskList.appendChild(taskItem);
-};
-
-const saveTask = (tasks) => {
-  localStorage.setItem("task", JSON.stringify(tasks));
-};
-
-addTaskBtn.addEventListener("click", () => {
-  if (taskInput.value.trim() === "") {
-    alert("Please enter task");
-    return;
-  }
-
-  // new task
-  const newTask = {
-    dataTask: taskInput.value.trim(),
-    completed: false,
+    tasks.forEach((task) => {
+      creatTaskElement(task);
+    });
   };
 
-  const tasks = JSON.parse(localStorage.getItem("task")) || [];
-  tasks.push(newTask);
-  creatTaskElement(newTask);
+  // save data to local storage
+  const saveTask = (tasks) => {
+    let data = localStorage.setItem("tasks", JSON.stringify(tasks));
+    console.log(data);
+    return "hello";
+  };
 
-  saveTask(tasks);
+  // create task element
+  const creatTaskElement = (task) => {
+    const taskItem = document.createElement("div");
+    taskItem.classList.add("task-item");
 
-  taskInput.value = ""; // clear input
+    if (task.completed) {
+      taskItem.classList.add("completed");
+    }
+
+    taskItem.innerHTML = `
+      <span class="task-text">${task.text}</span>
+      <div>
+        <button class="editButton">Edit Button</button>
+        <button class="deleteButton">Delete Button</button>
+        <input type="checkbox" class = "completedCheckedBox" ${
+          task.completed ? "checked" : ""
+        }></div>
+      `;
+
+    // EDIT
+    taskItem.querySelector(".editButton").addEventListener("click", () => {
+      editTask(task, taskItem);
+      console.log("hbfihdfb");
+    });
+
+    // delete
+    taskItem.querySelector(".deleteButton").addEventListener("click", () => {
+      deleteTask(task, taskItem);
+    });
+
+    // mark task as completed
+
+    taskItem
+      .querySelector(".completedCheckedBox")
+      .addEventListener("click", () => {
+        toggleTask(task, taskItem);
+      });
+
+    taskList.appendChild(taskItem);
+  };
+
+  addTaskBtn.addEventListener("click", () => {
+    if (taskInput.value.trim() === "") {
+      alert("Please enter task");
+      return;
+    }
+
+    // new task
+    const newTask = {
+      text: taskInput.value.trim(),
+      completed: false,
+    };
+
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push(newTask);
+    saveTask(tasks);
+    creatTaskElement(newTask);
+
+    taskInput.value = ""; // clear input
+  });
+
+  const editTask = (task, taskElement) => {
+    const newTask = prompt("Edit your task : ", task.text);
+    if (newTask !== null) {
+      task.text = newTask;
+      taskElement.querySelector(".task-text").textContent = newTask;
+
+      let data = saveTask(JSON.parse(localStorage.getItem("tasks")));
+      console.log(data);
+    }
+  };
+
+  const deleteTask = (task, taskElement) => {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const updateTask = tasks.filter((taskValue) => taskValue !== task);
+    saveTask(updateTask);
+    taskElement.remove();
+  };
+
+  const toggleTask = (task, taskElement) => {
+    task.completed = !task.completed;
+    taskElement.classList.toggle("completed");
+    saveTask(JSON.parse(localStorage.getItem("tasks")));
+  };
+
+  loadTask();
 });
