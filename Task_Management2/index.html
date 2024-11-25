@@ -4,6 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Record Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <style>
+      html {
+        scroll-behavior: smooth;
+        box-sizing: border-box;
+      }
+      *,
+      *before,
+      *after {
+        box-sizing: inherit;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 40px;
+        background: #f8f8f8;
+        align-items: center;
+        min-height: 100vh;
+        letter-spacing: 1px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      input,
+      button {
+        padding: 8px;
+        margin: 5px;
+      }
+      #hello {
+        background-color: blueviolet;
+      }
+    </style>
   </head>
   <body>
     <h1>Record Management</h1>
@@ -47,105 +85,21 @@
       </thead>
       <tbody id="recordList"></tbody>
     </table>
-
-    <script>
-      let currentEditIndex = null;
-
-      document.addEventListener("DOMContentLoaded", displayRecords);
-
-      function displayRecords() {
-        const recordList = document.getElementById("recordList");
-        recordList.innerHTML = "";
-
-        const records = getRecord();
-        if (records.length === 0) {
-          recordList.innerHTML = `<tr><td colspan = "4"> No Records found</td></tr>`;
-          return;
-        }
-
-        records.forEach((record, index) => {
-          recordList.innerHTML += `
-            <tr>
-                    <td>${record.name}</td>
-                        <td>${record.details}</td>
-                        <td>${new Date(record.date).toLocaleString()}</td>
-                        <td>
-                            <button onclick='loadRecord(${index})'>Edit</button>
-                            <button onclick='deleteRecord(${index})'>Delete</button>
-                        </td>
-            </tr>
-            `;
-        });
-      }
-
-      function addRecord() {
-        const nameInput = document.getElementById("name").value.trim();
-        const detailInput = document.getElementById("detail").value.trim();
-
-        if (!nameInput || !detailInput) {
-          alert("Both name and details are required");
-          return;
-        }
-
-        const newRecord = {
-          //   id: generateId(),
-          name: nameInput,
-          details: detailInput,
-          date: new Date().toLocaleString(),
-        };
-
-        const records = getRecord();
-        records.push(newRecord);
-        localStorage.setItem("records", JSON.stringify(records));
-
-        // clearForm();
-        displayRecords();
-      }
-
-      function loadRecord(index) {
-        const records = getRecord();
-        const record = records[index];
-        document.getElementById("name").value = record.name;
-        document.getElementById("detail").value = record.details;
-
-        currentEditIndex = index;
-
-        document.getElementById("addButton").style.display = "none";
-        document.getElementById("updateButton").style.display = "inline";
-      }
-
-      function updateRecord() {
-        const records = getRecord();
-
-        records[currentEditIndex].name = document
-          .getElementById("name")
-          .value.trim();
-        records[currentEditIndex].details = document
-          .getElementById("detail")
-          .value.trim();
-
-        records[currentEditIndex].date = new Date().toLocaleString();
-
-        localStorage.setItem("records", JSON.stringify(records));
-        // clearForm();
-        displayRecords();
-        document.getElementById("addButton").style.display = "inline";
-        document.getElementById("updateButton").style.display = "none";
-        currentEditIndex = null;
-      }
-
-      function deleteRecord(index) {
-        const records = getRecord();
-        records.splice(index, 1);
-        localStorage.setItem("records", JSON.stringify(records));
-        displayRecords();
-      }
-      
-      // getRecord
-      function getRecord() {
-        const records = localStorage.getItem("records");
-        return records ? JSON.parse(records) : [];
-      }
-    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
   </body>
 </html>
