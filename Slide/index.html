@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slider</title>
+    <style>
+      .slider {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slides {
+        display: flex;
+        transition: tranform 0.5s ease-in-out;
+      }
+
+      .slide {
+        min-width: 100%;
+        height: 300px;
+        background-color: lightblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: brown;
+      }
+
+      .model {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+      }
+      .model-content {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+      }
+      .prev {
+        left: 10px;
+      }
+      .next {
+        right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider">
+      <div class="slides">
+        <div class="slide">Slide 1</div>
+        <div class="slide">Slide 2</div>
+        <div class="slide">Slide 3</div>
+      </div>
+      <div class="prev">Prev</div>
+      <div class="next">Next</div>
+    </div>
+
+    <!-- Model -->
+    <div class="model" id="myModel" style="display: none">
+      <div class="model-content">
+        <p>This is my model</p>
+        <button id="closeModel">Close</button>
+      </div>
+    </div>
+    <script src="slider.js"></script>
+  </body>
+</html>
