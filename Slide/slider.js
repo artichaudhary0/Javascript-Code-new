@@ -2,7 +2,7 @@
 
 const slides = document.querySelector(".slides");
 
-const sliderCount = document.querySelectorAll(".slide").length;
+const sliderCount = document.querySelectorAll(".slide").length; // 3
 
 let currentSlide = 0;
 
@@ -13,7 +13,12 @@ let slideIntervel;
 // move to the next slide
 
 function nextSlide() {
-  currentSlide = (currentSlide + 1) % sliderCount; // 1%3 = 1  2%3 = 2 3%3 = 0 4%3 = 1 5%3 = 2 6%3 = 0
+  currentSlide = (currentSlide + 1) % sliderCount;
+  // cs = (0 + 1)%3 => 1 % 3 = 1
+  // CS = (1+1)%3 => 2%3 = 2
+  // CS = (3)%3 => 0
+  
+  // 1%3 = 1  2%3 = 2 3%3 = 0 4%3 = 1 5%3 = 2 6%3 = 0
   updateSlider();
 }
 
@@ -23,7 +28,7 @@ function previousSlide() {
   currentSlide = (currentSlide - 1 + sliderCount) % sliderCount;
   /*
   0 = (0-1+3) % 3 => 2%3= 2
-  1 = (2 - 1 + 3) % 3 => 4%3 => 1
+  = (2 - 1 + 3) % 3 => 4%3 => 1
   = (1 - 1 + 3 ) % 3 => 3%3 => 0
   */
   updateSlider();
