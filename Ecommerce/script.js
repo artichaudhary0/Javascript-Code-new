@@ -36,7 +36,7 @@ const sampleData = [
   },
 ];
 
-class Products {
+class Products { 
   constructor(products) {
     this.products = products;
     this.render();
