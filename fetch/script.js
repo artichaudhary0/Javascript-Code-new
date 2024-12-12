@@ -30,26 +30,40 @@ function buttonClickHandle() {
 
   xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true);
 
-  console.log("button clicked");
-
-  xhr.onprogress = function () {
-    console.log("progres");
-  };
+  xhr.onprogress = function () {};
 
   xhr.onload = function () {
     if (this.status === 200) {
-      // console.log(this.responseText);
-      let response = this.responseText;
+      let response = JSON.parse(this.responseText); // JSON
+      displayData(response);
+      // conver
       return response;
     } else {
       console.log(this.status);
     }
   };
 
-  console.log("end");
-
   xhr.send();
 }
 
-let data = buttonClickHandle();
-console.log(data);
+function displayData(response) {
+  const container = document.getElementById("data-container");
+  container.innerHTML = "";
+  response.forEach((user) => {
+    const userDiv = document.createElement("div");
+
+    userDiv.className = "arti";
+
+    userDiv.innerHTML = `
+      <h3>${user.id}</h3>
+      <h4>${user["address"]["street"]}</h4>
+      <h4>${user["company"]["name"]}</h4>
+    `;
+
+    container.appendChild(userDiv);
+  });
+}
+
+console.log(document.querySelector(".arti"));
+
+// let data = buttonClickHandle();
