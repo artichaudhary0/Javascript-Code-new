@@ -62,13 +62,11 @@ function removeEmployee(id) {
 document.getElementById("search").addEventListener("input", function () {
   const query = this.value.toLowerCase();
 
-  const filtered = employees.filter(
-    (emp) =>
+  const filtered = employees.filter((emp) => {
+    emp.id.toString().includes(query) ||
       emp.name.toLowerCase().includes(query) ||
-      emp.name.toLowerCase().includes(query)
-  );
-
-  console.log(filtered);
+      emp.department.toLowerCase().includes(query);
+  });
   renderFilterTable(filtered);
 });
 
@@ -92,4 +90,21 @@ function renderFilterTable(data) {
         `
     )
     .join("");
+}
+
+function generateAnalytics() {
+  if (employees.length === 0) {
+    alert("No employee available");
+    return;
+  }
+  const toatalSalary = employees.reduce((sum, emp) => sum + emp.salary, 0);
+
+  const topPerformer = employees.reduce((prev, curr) =>
+    curr.performance > prev.performance ? curr : prev
+  );
+
+  document.getElementById("analyticsContent").innerHTML = `
+  <p>Total Playroll : $${toatalSalary}</p>
+  <p>Top Performer : ${topPerformer.name} (Performance : ${topPerformer.performance})</p>
+  `;
 }
