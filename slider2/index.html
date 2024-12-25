@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slier2</title>
+    <style>
+        .slider {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 300px;
+            background-color: aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .model {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+            top: 0;
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide">Slide 1</div>
+            <div class="slide">Slide 2</div>
+            <div class="slide">Slide 3</div>
+            <div class="slide">Slide 4</div>
+            <div class="slide">Slide 5</div>
+            <div class="slide">Slide 6</div>
+        </div>
+
+        <div class="prev">Prev</div>
+        <div class="next">Next</div>
+    </div>
+
+
+    <div class="model" id="myModel">
+
+        <div class="model-content">
+            <p>This is model window!</p>
+            <button id="closeModel">Close</button>
+        </div>
+    </div>
+
+
+    <script>
+        //Slider logic
+
+        const slides = document.querySelector(".slides")
+        const slideCount = document.querySelectorAll(".slide").length
+
+        let currentSlide = 0
+        let sliderInterval
+        let intervelTime = 3000
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slideCount;
+            /*
+                c = (0+1)%6 => 1
+                c = (2)%6 = 2
+                c = 3%6 = 3
+                c= 4%6 = 4
+                c= 5%6 = 5
+                c= 6%6 = 0
+            */
+            updateSlide();
+        }
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+            /*
+                c = (0+1)%6 => 1
+                c = (2)%6 = 2
+                c = 3%6 = 3
+                c= 4%6 = 4
+                c= 5%6 = 5
+                c= 6%6 = 0
+            */
+            updateSlide();
+        }
+
+        // start
+        function startSlide() {
+            sliderInterval = setInterval(nextSlide, intervelTime)
+        }
+
+        // stop
+        function stopSlide() {
+            clearInterval(sliderInterval)
+        }
+
+
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        document.querySelector(".next").addEventListener("click", () => {
+            nextSlide();
+            stopSlide();
+            startSlide(); // reset interval on manual control
+        })
+        document.querySelector(".prev").addEventListener("click", () => {
+            prevSlide();
+            stopSlide();
+            startSlide(); // reset interval on manual control
+        })
+
+        // start the slider automatically
+        startSlide()
+
+        const model = document.getElementById("myModel")
+        const closeBtn = document.getElementById("closeModel")
+
+        // show model after 5 sec
+
+        setTimeout(() => {
+            model.style.display = "flex"
+        }, 5000)
+
+        closeBtn.addEventListener("click", () => {
+            model.style.display = "none"
+        })
+ </script>
+
+</body>
+
+</html>
