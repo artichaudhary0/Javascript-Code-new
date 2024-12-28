@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management</title>
+</head>
+
+<body>
+    <h1>Manage record Local storage</h1>
+
+    <div>
+        <div class="form-group">
+            <input type="text" id="name" placeholder="Enter Name" />
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="details" placeholder="Enter Details" />
+        </div>
+
+        <div class="form-group">
+            <button id="addButton" onclick="addRecord()">Add Button</button>
+            <button id="updateButton" onclick="updateRecord()" style="display: none;">Update Button</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="text" id="search" placeholder="Search by name" onkeyup="searchRecords()" />
+    </div>
+
+
+    <h2>Stored Record</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="recordList"></tbody>
+    </table>
+
+
+    <script>
+        let currentEditIndex = null
+
+        document.addEventListener("DOMContentLoaded", displayrecords)
+
+        function searchRecords() {
+            const query = document.getElementById("search").value.toLowerCase()
+
+            const records = getRecords()
+
+            const recordList = document.getElementById("recordList")
+            recordList.innerHTML = ''
+
+            const filterRecord = records.filter((record) => record.name.toLowerCase().includes(query))
+
+            if (filterRecord.length === 0) {
+                recordList.innerHTML = `<tr>
+                <td colspan = "4">No records available</td>
+                </tr>`
+            }
+
+            filterRecord.forEach((record, index) => {
+
+                // show the record in table
+                recordList.innerHTML += `
+                <tr>
+                    <td>${record.name}</td>
+                    <td>${record.details}</td>
+                    <td>${new Date(record.date).toLocaleString()}</td>
+                    <td>
+                        <button onclick="editRecord(${index})">Edit</button>
+                        <button onclick="deleteRecord(${index})">Delete</button>
+                        </td>
+                </tr>
+            `
+            });
+
+        }
+        function addRecord() {
+            const nameInput = document.getElementById("name").value.trim()
+            const detailsInput = document.getElementById("details").value.trim()
+
+
+            if (!nameInput || !detailsInput) {
+                alert("Both name and details are required")
+            }
+
+            const newRecord = {
+                id: generateUniqueId(),
+                name: nameInput,
+                details: detailsInput,
+                date: new Date()
+            }
+
+            const records = getRecords()
+            records.push(newRecord)
+
+            localStorage.setItem("records", JSON.stringify(records))
+
+            clearForm()
+            displayrecords()
+        }
+
+        function displayrecords() {
+            const recordList = document.getElementById("recordList")
+
+            recordList.innerHTML = ''
+
+            const records = getRecords()
+
+            if (records.length === 0) {
+                recordList.innerHTML = `<tr>
+                <td colspan = "4">No records available</td>
+                </tr>`
+            }
+
+            records.forEach((record, index) => {
+
+                // show the record in table
+                recordList.innerHTML += `
+                    <tr>
+                        <td>${record.name}</td>
+                        <td>${record.details}</td>
+                        <td>${new Date(record.date).toLocaleString()}</td>
+                        <td>
+                            <button onclick="editRecord(${index})">Edit</button>
+                            <button onclick="deleteRecord(${index})">Delete</button>
+                            </td>
+                    </tr>
+                `
+            });
+        }
+
+        function deleteRecord(index) {
+            const records = getRecords()
+            records.splice(index, 1)
+            localStorage.setItem("records", JSON.stringify(records))
+            displayrecords()
+        }
+
+        function editRecord(index) {
+            const records = getRecords() // array[index]
+            const record = records[index]
+
+            document.getElementById("name").value = record.name
+            document.getElementById("details").value = record.details
+
+            currentEditIndex = index
+
+            document.getElementById("addButton").style.display = "none"
+            document.getElementById("updateButton").style.display = "inline"
+
+
+        }
+
+        function updateRecord() {
+            const records = getRecords()
+
+            records[currentEditIndex].name = document.getElementById("name").value.trim()
+            records[currentEditIndex].details = document.getElementById("details").value.trim()
+            records[currentEditIndex].date = new Date()
+
+            localStorage.setItem("records", JSON.stringify(records))
+            clearForm()
+            displayrecords()
+
+            document.getElementById("addButton").style.display = "inline"
+            document.getElementById("updateButton").style.display = "none"
+            currentEditIndex = null
+
+        }
+
+
+
+
+
+        function getRecords() {
+            const records = localStorage.getItem("records")
+            return records ? JSON.parse(records) : []
+        }
+
+        function generateUniqueId() {
+            return Math.floor(Math.random() * Date.now())
+        }
+
+
+        function clearForm() {
+            document.getElementById("name").value = ''
+            document.getElementById("details").value = ''
+        }
+
+
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
