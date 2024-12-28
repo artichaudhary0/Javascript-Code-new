@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Application</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        #quote-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555555;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #author {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #777777;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #ffffff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #error-message {
+            margin-top: 10px;
+            color: #e63946;
+            font-size: 0.9rem;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h1>Random Quote Generator</h1>
+
+
+        <div id="quote-container" class="quote-container"></div>
+
+        <p id="quote">Click the button to generate quote</p>
+        <p id="author"></p>
+        <button id="generateBtn">Random Quote</button>
+        <div id="error-message"></div>
+    </div>
+
+
+    <script>
+        const quotes = [
+            { quote: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+            { quote: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+            { quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+            { quote: "Happiness is not something ready-made. It comes from your own actions.", author: "Dalai Lama" },
+            { quote: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" },
+            { quote: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
+            { quote: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+            { quote: "Be the change that you wish to see in the world.", author: "Mahatma Gandhi" },
+            { quote: "The best way to predict the future is to create it.", author: "Peter Drucker" },
+            { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" }
+        ];
+
+        const generateBtn = document.getElementById("generateBtn")
+        const quoteElement = document.getElementById("quote")
+        const authorElemet = document.getElementById("author")
+        const errorMessage = document.getElementById("error-message")
+        const quoteContainer = document.getElementById("quote-container")
+
+        generateBtn.addEventListener("click", () => {
+
+            try {
+
+                const randomIndex = Math.floor(Math.random() * quotes.length)
+
+                const randomQuote = quotes[randomIndex]
+                quoteContainer.style.transform = 'scale(1,1)'
+
+                setTimeout(() => quoteContainer.style.transform = 'scale(1)', 300)
+
+                quoteElement.style.opacity = 0;
+
+                setTimeout(() => {
+                    quoteElement.textContent = randomQuote.quote;
+                    authorElemet.textContent = `- ${randomQuote.author}`
+                    quoteElement.style.opacity = 1;
+                }, 500)
+
+
+                errorMessage.textContent = ''
+            } catch (error) {
+                errorMessage.textContent = error
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

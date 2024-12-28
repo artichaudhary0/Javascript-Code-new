@@ -1,0 +1,44 @@
+<!--	
+JS Form Validation
+Jquery Validation
+JS Error Throw and try to catch Arrow functions
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regestration Form</title>
+  </head>
+  <body>
+    <div class="form-container">    
+      <form id="regestrationForm">
+        <h1>Regestration Form</h1>
+        <label for="name">Name </label>
+        <input type="text" id="name" placeholder="Enter your name" />
+        <small id="nameError"></small>
+
+        <label for="email">Email </label>
+        <input type="email" id="email" placeholder="Enter your email" />
+        <small id="emailError"></small>
+
+        <label for="password">Password </label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+        <small id="passwordError"></small>
+
+        <label for="phone">Phone </label>
+        <input type="text" id="phone" placeholder="Enter your phone" />
+        <small id="phoneError"></small>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: grey;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #e0e0e0;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      button {
+        padding: 5px 10px;
+        margin: 0px 5px;
+        cursor: pointer;
+        background-color: grey;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Navigation Through List</h1>
+
+      <ul id="itemList">
+        <li>
+          Item 1<button class="prev">Previous</button
+          ><button class="next">Next</button>
+        </li>
+        <li>
+          Item 2<button class="prev">Previous</button
+          ><button class="next">Next</button>
+        </li>
+        <li>
+          Item 3<button class="prev">Previous</button
+          ><button class="next">Next</button>
+        </li>
+        <li>
+          Item 4<button class="prev">Previous</button
+          ><button class="next">Next</button>
+        </li>
+        <li>
+          Item 5<button class="prev">Previous</button
+          ><button class="next">Next</button>
+        </li>
+      </ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
