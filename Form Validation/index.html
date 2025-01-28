@@ -1,44 +1,60 @@
-<!--	
-JS Form Validation
-Jquery Validation
-JS Error Throw and try to catch Arrow functions
--->
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Regestration Form</title>
-  </head>
-  <body>
-    <div class="form-container">    
-      <form id="regestrationForm">
-        <h1>Regestration Form</h1>
-        <label for="name">Name </label>
-        <input type="text" id="name" placeholder="Enter your name" />
-        <small id="nameError"></small>
 
-        <label for="email">Email </label>
-        <input type="email" id="email" placeholder="Enter your email" />
-        <small id="emailError"></small>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .from-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
 
-        <label for="password">Password </label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-        />
-        <small id="passwordError"></small>
+        }
 
-        <label for="phone">Phone </label>
-        <input type="text" id="phone" placeholder="Enter your phone" />
-        <small id="phoneError"></small>
+        label {
+            display: block;
+        }
 
-        <button type="submit">Register</button>
-      </form>
+        small {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="from-container">
+        <form id="registrationForm">
+
+            <h2>Registrartion Form</h2>
+
+            <label for="name">Name : </label>
+            <input type="text" id="name" placeholder="Enter your name" />
+            <small id="nameError"></small>
+
+            <label for="email">Email : </label>
+            <input type="email" id="email" placeholder="Enter your email" />
+            <small id="emailError"></small>
+
+            <label for="password">Password : </label>
+            <input type="password" id="password" placeholder="Enter your password" />
+            <small id="passwordError"></small>
+            <label for="phone">Phone number: </label>
+            <input type="number" id="phone" placeholder="Enter your phone number" />
+            <small id="phoneError"></small>
+            <br>
+
+            <button type="submit">Register</button>
+
+
+
+        </form>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+
+    <script src="./script.js"></script>
+</body>
+
 </html>
